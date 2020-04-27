@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="ImageLoader.ImageControl"
+             xmlns:local="clr-namespace:ImageLoader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="311" d:DesignWidth="300">
+    <Grid>
+        <Border BorderThickness="1" BorderBrush="Gray" Margin="10,10,10,118">
+            <Image x:Name="ImageBox"/>
+        </Border>
+        <Label Content="Enter URL:" Margin="10,0,0,87" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="64"/>
+        <TextBox x:Name="URLTextBox" Margin="10,0,10,64" Height="23" VerticalAlignment="Bottom"/>
+        <Button x:Name="StartButton" Content="Start" Margin="10,0,10,37" VerticalAlignment="Bottom" Click="StartButton_Click"/>
+        <Button x:Name="StopButton" Content="Stop" Margin="10,0,10,10" Height="22" VerticalAlignment="Bottom" Click="StopButton_Click"/>
+
+    </Grid>
+</UserControl>
