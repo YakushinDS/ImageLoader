@@ -70,10 +70,15 @@ namespace ImageLoader
                     try
                     {
                         BitmapImage image = new BitmapImage();
-                        image.BeginInit();
-                        image.StreamSource = new MemoryStream(e.Result);
-                        image.EndInit();
-                        image.Freeze();
+
+                        using (MemoryStream stream = new MemoryStream(e.Result))
+                        {
+                            image.BeginInit();
+                            image.StreamSource = stream;
+                            image.EndInit();
+                            image.Freeze();
+                        }
+
                         ImageBox.Source = image;
                     }
                     catch (Exception ex)
