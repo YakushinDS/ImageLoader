@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Linq;
 
 namespace ImageLoader
 {
@@ -32,15 +33,8 @@ namespace ImageLoader
 
         private void UpdateProgressBar()
         {
-            int totalValue = 0;
-
-            foreach (var p in progress)
-            {
-                totalValue += p.Value;
-            }
-
             DownloadProgressBar.Maximum = progress.Count == 0 ? 100 : 100 * progress.Count;
-            DownloadProgressBar.Value = totalValue;
+            DownloadProgressBar.Value = progress.Sum((p) => p.Value);
         }
 
         private void StartAllButton_Click(object sender, RoutedEventArgs e)
