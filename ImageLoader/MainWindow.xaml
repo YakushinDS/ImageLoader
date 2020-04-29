@@ -2,17 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ImageLoader" x:Class="ImageLoader.MainWindow"
-        Title="Image Loader" Height="450" Width="700" MinHeight="400" MinWidth="500">
+        Title="Image Loader" Height="443" Width="700" MinHeight="400" MinWidth="500">
     <Window.Resources>
-        <Style TargetType="{x:Type local:ImageControl}">
-            <EventSetter Event="ImageDownloadProgressChanged" Handler="ImageControl_ImageDownloadProgressChanged"/>
-            <EventSetter Event="ImageDownloadCompleted" Handler="ImageControl_ImageDownloadCompleted"/>
-        </Style>
+        <local:HeightConverter x:Key="heightConverter" />
+        <local:WidthConverter x:Key="widthConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="21"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="65"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,11 +18,37 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ProgressBar x:Name="DownloadProgressBar" Margin="10,0,10,10" Grid.ColumnSpan="3" Grid.Row="2" Height="23" VerticalAlignment="Bottom"/>
-        <local:ImageControl x:Name="ImageControl1"/>
-        <local:ImageControl Grid.Column="1"  x:Name="ImageControl2"/>
-        <local:ImageControl Grid.Column="2"  x:Name="ImageControl3"/>
-        <Button x:Name="StartAllButton" Content="Start all" Grid.Row="1" VerticalAlignment="Top" Height="22" Margin="10,0" Grid.Column="1" Grid.RowSpan="2" Click="StartAllButton_Click"/>
-        <Label Content="Overall progress:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="61,6,61,0" Grid.Row="2" Height="26" Grid.ColumnSpan="3"/>
+        <ProgressBar x:Name="DownloadProgressBar" Margin="10,0,10.333,10" Grid.ColumnSpan="3" Grid.Row="2" Height="23" VerticalAlignment="Bottom" Value="{Binding ProgressPercentage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Maximum="{Binding TotalValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="StartAllButton" Content="Start all" Grid.Row="1" Margin="10.333,0,8.667,0" Grid.Column="1" Command="{Binding StartAll}" Height="22" VerticalAlignment="Bottom"/>
+        <Label Content="Overall progress:" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="65.333,6,65.667,0" Grid.Row="2" Height="26" Grid.Column="1" Width="100"/>
+        <Grid HorizontalAlignment="Left" Height="175" VerticalAlignment="Top" Width="692" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ListView Name="ImageList" Grid.ColumnSpan="3" HorizontalContentAlignment="Stretch" Margin="0,0,0.333,0" ItemsSource="{Binding Images}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="false"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:ImageControl DataContext="{Binding}" Height="{Binding ElementName=ImageList, Path=ActualHeight, Converter={StaticResource heightConverter}}">
+                        <local:ImageControl.Width>
+                            <MultiBinding Converter="{StaticResource widthConverter}">                                <Binding ElementName="ImageList" Path="ItemsSource.Count"/>                                <Binding ElementName="ImageList" Path="ActualWidth"/>                            </MultiBinding>
+                        </local:ImageControl.Width>
+                    </local:ImageControl>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
