@@ -18,7 +18,7 @@ namespace ImageLoader
                 double height = (double)value;
 
                 if (height != 0)
-                    return height - 25; // Вычитаем ширину скроллбара, чтобы он не появлялся
+                    return height - SystemParameters.HorizontalScrollBarHeight; // Вычитаем ширину скроллбара, чтобы он не появлялся
                 else
                     return 300;
             }

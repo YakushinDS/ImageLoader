@@ -19,7 +19,7 @@ namespace ImageLoader
                 double totalWidth = (double)values[1];
 
                 if (count != 0)
-                    return (totalWidth -25) / count; // Вычитаем ширину скроллбара, чтобы он не появлялся
+                    return (totalWidth - SystemParameters.VerticalScrollBarWidth) / count; // Вычитаем ширину скроллбара, чтобы он не появлялся
                 else
                     return 300;
             }
