@@ -180,7 +180,7 @@ namespace ImageLoader
                 {
                     ErrorMessage = "An error has occurred during a download";
                     HasError = true;
-                    MessageBox.Show("The URL doesn't refer to an image", "Image Processing Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("An error has occurred during a download", "Download Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Debug.WriteLine(e.Error.Message, "WebClient");
                 }
         }
